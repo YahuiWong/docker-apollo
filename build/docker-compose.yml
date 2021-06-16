@@ -1,0 +1,43 @@
+version: '3'
+services:
+  apollo-config-01:
+    container_name: apollo-configservice-01
+    build: ./config
+    ports:
+      - 8080:8080
+    volumes:
+      - /data/apollo/config01:/opt/logs/100003171
+    env_file:
+      - apollo.env
+    environment:
+      - DB_NAME=ApolloConfigDB_Docker
+
+  apollo-admin-01:
+    container_name: apollo-adminservice-01
+    build: ./admin
+    ports:
+      - 8090:8090
+    volumes:
+      - /data/apollo/admin01:/opt/logs/100003172
+    env_file:
+      - apollo.env
+    environment:
+      - DB_NAME=ApolloConfigDB_Docker
+
+  apollo-portal-01:
+    container_name: apollo-portalservice-01
+    build: ./portal
+    ports:
+      - 8070:8070
+    volumes:
+      - /data/apollo/portal01:/opt/logs/100003173
+    env_file:
+      - apollo.env
+    environment:
+      - DB_NAME=ApolloPortalDB_Docker
+      - LOCAL_META=http://192.168.0.103:8080
+      - DEV_META=http://192.168.0.103:8080
+      - FAT_META=http://192.168.0.103:8080
+      - UAT_META=http://192.168.0.103:8080
+      - LPT_META=http://192.168.0.103:8080
+      - PRO_META=http://192.168.0.103:8080
